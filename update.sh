@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if [ -f ./check ]; then
-  rm -rf ./hosts ./modules ./materials ./flake.nix ./flake.lock
+  rm -rf ./hosts ./modules ./materials ./scripts ./flake.nix ./flake.lock
   cp -r /etc/nixos/* ./
   git add . --all
   echo "Enter commit name (enter to default)"
