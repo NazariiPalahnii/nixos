@@ -3,7 +3,6 @@
   imports = [
     # windows manager
     ../../../modules/wm/hyprland
-    ../../../modules/wm/quickshell
     # gui
     ../../../modules/gui/spicetify
     ../../../modules/gui/discord
@@ -21,7 +20,7 @@
     stateVersion = "25.11";
 
     file.".config/mpv".source = ../../../materials/mpv;
-    file."Pictures/Wallpapers".source = ../../../materials/Wallpapers;
+    #file."Pictures/Wallpapers".source = ../../../materials/Wallpapers;
    
     packages = with pkgs; [
         # Apps
