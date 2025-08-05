@@ -28,8 +28,11 @@
 
       bind = [
         "$mod, RETURN, exec, kitty" 
+	"$mod, Y, exec, ${../../../scripts/yazi.sh}"
         "$mod, E, exec, nautilus"
         "$mod, B, exec, zen" 
+        "$mod, D, exec, discord" 
+        "$mod, O, exec, obsidian" 
         "$mod, Q, killactive"
         "$mod, W, togglefloating"
         "$mod, G, fullscreen"
