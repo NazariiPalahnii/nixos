@@ -6,7 +6,7 @@
 
       ../../modules/wm/nvidia
 
-      ../../modules/tui/bluetooth
+#      ../../modules/tui/bluetooth
     ];
 
   # Use the systemd-boot EFI boot loader.
