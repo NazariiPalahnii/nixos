@@ -4,9 +4,12 @@
     [
       ./hardware-configuration.nix
 
-      ../../modules/wm/nvidia
-
-#      ../../modules/tui/bluetooth
+      # nixos modules
+      ./nix-modules/nvidia.nix
+      ./nix-modules/bluetooth.nix
+      ./nix-modules/users.nix
+      ./nix-modules/fonts.nix
+      ./nix-modules/audio.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -19,49 +22,17 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  nix.settings.experimental-features = ["nix-command" "flakes"]; 
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  programs.dconf.enable = true;
 
-   networking.hostName = "nixos"; # Define your hostname.
-   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
-   time.timeZone = "Europe/Berlin";
-
- fonts = {
-  enableDefaultPackages = true;
-  packages = with pkgs; [ 
-    ubuntu_font_family
-    liberation_ttf
-    material-symbols
-    nerd-fonts.jetbrains-mono
-    # Persian Font
-    vazir-fonts
+  environment.systemPackages = with pkgs; [
+   #...
   ];
 
-  fontconfig = {
-    defaultFonts = {
-      serif = [  "Liberation Serif" "Vazirmatn" ];
-      sansSerif = [ "Ubuntu" "Vazirmatn" ];
-      monospace = [ "Ubuntu Mono" ];
-    };
-  };
-}; 
-
-  services.pipewire = {
-     enable = true;
-     pulse.enable = true;
-  };
-
-   users.users.Prizrak = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "input" "networkmanager" ]; # Enable ‘sudo’ for the user.
-  };
-
-   programs.dconf.enable = true;
-
-   environment.systemPackages = with pkgs; [
-   #...
-   ];
+  # home-manager
+  home-manager.users.Prizrak = import ./home/home-configuration.nix;
 
   system.stateVersion = "25.05"; # Did you read the comment?
 

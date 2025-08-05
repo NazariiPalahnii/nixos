@@ -48,7 +48,7 @@
     let 
       system = "x86_64-linux";
     in { 
-    nixosConfigurations.Prizrak = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       inherit system;
       modules = [
@@ -61,7 +61,6 @@
             };
 	    useGlobalPkgs = true;
 	    useUserPackages = true;
-	    users.Prizrak = ./hosts/Prizrak/home/home-configuration.nix;
 	  };
 	}
       ];
