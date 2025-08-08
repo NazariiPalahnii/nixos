@@ -1,14 +1,14 @@
 { config, lib, pkgs, ... }:
 {
   programs.neovim = {
+    coc.enable = true;
     enable = true;
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
 
-    # Добавляем suda.vim для работы с sudo
     plugins = with pkgs.vimPlugins; [
-      vim-suda
+      cord-nvim
       catppuccin-nvim
       lualine-nvim
       bufferline-nvim
@@ -26,10 +26,22 @@
       nvim-autopairs
       comment-nvim
       which-key-nvim
+      
+      # Coc плагины
+      coc-ultisnips
+      coc-snippets
+      coc-json
+      coc-pyright
+      coc-sh
+      coc-css
+      coc-html
+      coc-prettier
+      coc-tsserver
+      coc-rust-analyzer
     ];
 
     extraLuaConfig = ''
-      -- Custom color palette
+      -- Кастомная палитра цветов
       local colors = {
         base = "#1e1e2e",
         mantle = "#181825",
@@ -47,7 +59,7 @@
         surface2 = "#585b70",
       }
 
-      -- Theme setup
+      -- Настройка темы
       require('catppuccin').setup({
         flavour = "mocha",
         color_overrides = { mocha = colors },
@@ -70,7 +82,7 @@
       })
       vim.cmd.colorscheme("catppuccin")
 
-      -- Basic settings
+      -- Базовые настройки
       vim.opt.number = true
       vim.opt.relativenumber = true
       vim.opt.tabstop = 2
@@ -79,23 +91,20 @@
       vim.opt.cursorline = true
       vim.g.mapleader = ' '
 
-      -- Key mappings
+      -- Горячие клавиши
       vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>")
       vim.keymap.set("n", "<leader>e", ":NvimTreeFocus<CR>")
       vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>")
       vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>")
 
-      -- Sudo write shortcut
-      vim.keymap.set("n", "<leader>w", ":SudaWrite<CR>")
-
-      -- NvimTree setup
+      -- Настройка NvimTree
       require("nvim-tree").setup({
         disable_netrw = true,
         hijack_netrw = true,
         view = { width = 30, side = "left" },
       })
 
-      -- Lualine setup
+      -- Настройка Lualine
       require('lualine').setup({
         options = {
           theme = {
@@ -107,7 +116,7 @@
         }
       })
 
-      -- Bufferline setup
+      -- Настройка Bufferline
       require("bufferline").setup({
         highlights = {
           fill = { bg = colors.mantle },
@@ -115,12 +124,12 @@
         }
       })
 
-      -- Telescope setup
+      -- Настройка Telescope
       require("telescope").setup({
         defaults = { color_devicons = true }
       })
 
-      -- Treesitter setup
+      -- Настройка Treesitter
       local parser_dir = vim.fn.stdpath("config") .. "/treesitter-parsers"
       vim.fn.mkdir(parser_dir, "p")
       require'nvim-treesitter.configs'.setup {
@@ -129,6 +138,7 @@
       }
       vim.opt.runtimepath:append(parser_dir)
 
+      -- Подсветка отступов
       vim.cmd(string.format([[
         highlight IndentBlanklineIndent1 guifg=%s
         highlight IndentBlanklineIndent2 guifg=%s

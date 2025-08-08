@@ -1,4 +1,7 @@
 {pkgs, config, inputs, ... }:
+let 
+ # script = import ../../../materials/default.nix { inherit pkgs; };
+in
 {
 
   home.packages = with pkgs; [
@@ -16,6 +19,7 @@
     cliphist  
   ];
 
+
   wayland.windowManager.hyprland = {
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     enable = true;
@@ -28,15 +32,15 @@
 
       bind = [
         "$mod, RETURN, exec, kitty" 
-	"$mod, Y, exec, ${../../../scripts/yazi.sh}"
-        "$mod, E, exec, nautilus"
+	"$mod, Y, exec, ${../../../scripts/nvim.sh}"
+	"$mod, E, exec, nautilus"
         "$mod, B, exec, zen" 
         "$mod, D, exec, discord" 
         "$mod, O, exec, obsidian" 
         "$mod, Q, killactive"
         "$mod, W, togglefloating"
         "$mod, G, fullscreen"
-	"$mod, SPACE, exec, caelestia shell drawers toggle launcher "
+	"$mod, SPACE, exec, caelestia shell drawers toggle launcher"
         
         ", Print, exec, hyprshot -m output"
         "SHIFT, Print, exec, hyprshot -m region"
@@ -94,6 +98,11 @@
         "NIXOS_OZONE_WL,1"  
       ];
 
+      windowrule = [
+	"nomaxsize, class:^(polkit-mate-authentication-agent-1)$"
+        "pin, class:^(polkit-mate-authentication-agent-1)$"
+      ];
+
       general = {
         resize_on_border = true;
         border_size = 2;  
@@ -123,7 +132,7 @@
       };
       
       input = {
-        kb_layout = "us,ru";
+        kb_layout = "us,ru, de";
         kb_options = "grp:alt_shift_toggle";
         follow_mouse = 1;
       };
